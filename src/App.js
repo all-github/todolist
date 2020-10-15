@@ -7,14 +7,10 @@ import ToDoList from './components/ToDoList';
 function App() {
   const [todos,setToDos] = useState([
     {
-      id: 1,data.|,
+      id: 1,
+      text: '할 일 목록1',
       checked: false
     },
-    {
-      id: 2,
-      text: '할 일 목록2',
-      checked: true
-    }
 ]);
 
   const nextID = useRef(3);
@@ -25,23 +21,23 @@ function App() {
       checked : false
     }
     setToDos( todos.concat(next) );
-    nextID.current+=1;
+    nextID.current += 1;
   },[todos]);
 
   const onRemove = useCallback( id => {
-    setToDos( todos.filter( value => value.id !== id ) );
+    setToDos( todos.filter( data => data.id !== id ) );
   },[todos]);
 
-  const onToggle = unseCallback( id => {
+  const onToggle = useCallback( id => {
     setToDos( todos.map(data=>{
-    return (data.id === id ? {...data,checked :!data.checked} : data;
+    return data.id === id ? {...data,checked :!data.checked} : data;
   }) );
 },[todos]);  
 
   return (
       <ToDoTemp>
         <ToDoInsert onInsert={onInsert}/>
-        <ToDoList todos={todos} onRemove={onRemove} />
+        <ToDoList todos={todos} onRemove={onRemove} onToggle={onToggle}/>
       </ToDoTemp>
   );
 }
