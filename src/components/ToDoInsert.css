@@ -1,0 +1,15 @@
+.ToDoInsert{
+    height: 30px;
+    display: flex;
+}
+
+.ToDoInsert > input{
+    background-color: #222;
+    color: #fff;
+    flex:1;
+}
+.ToDoInsert > button:hover{
+    color: #fff;
+    background-color: turquoise;
+    cursor: pointer;
+}

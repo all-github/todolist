@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React,{useState,useRef, useCallback} from 'react';
+import ToDoInsert from './components/ToDoInsert';
+import ToDoTemp from './components/ToDoTemp';
+import ToDoList from './components/ToDoList';
+
 
 function App() {
+  const [todos,setToDos] = useState([
+    {
+      id: 1,data.|,
+      checked: false
+    },
+    {
+      id: 2,
+      text: '할 일 목록2',
+      checked: true
+    }
+]);
+
+  const nextID = useRef(3);
+  const onInsert = useCallback(text=>{
+    const next = {
+      id : nextID.current,
+      text : text,
+      checked : false
+    }
+    setToDos( todos.concat(next) );
+    nextID.current+=1;
+  },[todos]);
+
+  const onRemove = useCallback( id => {
+    setToDos( todos.filter( value => value.id !== id ) );
+  },[todos]);
+
+  const onToggle = unseCallback( id => {
+    setToDos( todos.map(data=>{
+    return (data.id === id ? {...data,checked :!data.checked} : data;
+  }) );
+},[todos]);  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <ToDoTemp>
+        <ToDoInsert onInsert={onInsert}/>
+        <ToDoList todos={todos} onRemove={onRemove} />
+      </ToDoTemp>
   );
 }
+
 
 export default App;
